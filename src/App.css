@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 
-
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
@@ -18,95 +17,105 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #0277BD;
 }
 
 body {
+  color: #00838F;
   background-color: white;
   font-family: Quicksand;
 }
 
 p {
-  color: black;
+  color: inherit;
   font-weight: bolder;
 }
 
 h2 {
+  margin: 40px auto 15px auto ;
   font-weight: bolder;
-  font-size: 40px;
-  color: black;
+  font-size: 32px;
+  color: inherit;
 }  
 
 .gamebutton {
-  border: 1px solid black ! important;
+  border: 1px solid #00BCD4 ! important;
   width: 20px; 
   height: 20px;
   margin: 1px 1px;
   border-radius: 8px;
 }
 
-.gamebutton:hover {
-  background-color: black;
-  cursor: pointer;
-  color: white;
-}
-
 .control-buttons {
-  width: 60%;
+  width: 30%;
+  max-width: 340px;
   margin: auto auto;
+  margin-bottom: -10px;
 }
 
 .control-buttons button, .modifier-buttons button {
-  background-color: white;
-  color: #F06292;
+  background-color:#00838F;
+  color: white;
   font-family: Quicksand ;
   margin: 15px auto;
-  border: 2px solid #F06292;
+  /* border: 2px solid #009688; */
   border-radius: 15px;
 }
 
 .control-buttons button:hover, .modifier-buttons button:hover {
-  background-color: black;
+  background-color: #48C9B0;
   cursor: pointer;
   color: white;
 }
 
-.modifier-buttons {
-  width: 60%;
-  margin: auto auto;
-  color: white;
-}
-/* 
 .grid-holder {
-
-} */
+  margin-bottom: 30px;
+}
 
 .generation-info {
-  margin-top: 10px;
-  color: white;
-}
-/* .generation-info .row {
-} */
-.generation-info .row i {
-  font-size: 30px;
-  color: black;
-}
-.generation-info .row p {
-  padding-top: 4px
+  width: 400px;
+  margin: 20px auto 0px auto;
 }
 
-.far, .fas, .fab, .fa {
+.generation-info .row i {
+  margin-right: -20px;
   font-size: 30px;
-  margin-top: 20;
+}
+
+.generation-info .row p {
+  margin-left: -20px;
+  padding-top: 4px
+}
+.modifier-buttons {
+  width: 30%;
+  max-width: 340px;
+  margin: -10px auto;
+  color: white;
+}
+
+/* .modifier-buttons button {
+  width: 40%;
+} */
+
+.modifier-buttons i {
+  font-size: 25px;
+  margin: 20;
   color: inherit;
   padding: 4px;
 }
 
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+button:active, button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+
+/*  */
+  /* @keyframes App-logo-spin { */
+    /* from { */
+      /* transform: rotate(0deg); */
+    /* } */
+    /* to { */
+      /* transform: rotate(360deg); */
+    /* } */
+  /* } */

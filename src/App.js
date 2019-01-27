@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-const mainColor = 'black'
+const mainColor = '#48C9B0'
 
 class App extends Component {
   constructor(props) {
@@ -14,10 +14,10 @@ class App extends Component {
       intervalId: null,
       deadCell: "white",
       aliveCell: mainColor,
-      size: 20,
-      totalRows: 20,
-      totalColumns: 20,
-      boardMatrix: this.makeRandomBoard(20, 20),
+      size: 15,
+      totalRows: 15,
+      totalColumns: 15,
+      boardMatrix: this.makeRandomBoard(15, 15),
       speed: 500,
       generation: 0
     }
@@ -64,11 +64,11 @@ class App extends Component {
     let length = this.state.totalRows
     let width = this.state.totalColumns
     if (int === 0) {
-      if (length > 20) {length = length - 5}
-      if (width > 20)  {width = width - 5}
+      if (length > 15) { length = length - 5 }
+      if (width > 15) { width = width - 5 }
     } else {
-      if (length < 60)  {length = length + 5}
-      if (width < 60)  {width = width + 5}
+      if (length < 40) { length = length + 5 }
+      if (width < 40) { width = width + 5 }
     }
     this.clearBoard()
     this.setState({
@@ -81,9 +81,9 @@ class App extends Component {
   changeSpeed(int) {
     let speed = this.state.speed
     if (int === 0) {
-      if (speed < 2000)  {speed = speed + 250};
+      if (speed < 2000) { speed = speed + 250 };
     } else {
-      if (speed > 250) {speed = speed - 250};
+      if (speed > 250) { speed = speed - 250 };
     }
     this.setState({ speed: speed })
   }
@@ -102,7 +102,7 @@ class App extends Component {
   generateNextGeneration() {
     this.setState({ generation: this.state.generation + 1 })
     let self = this
-    console.log("generating next generation")
+    //console.log("generating next generation")
     let currentBoard = this.state.boardMatrix.slice()
     let newBoard = []
     let row = 0
@@ -139,18 +139,18 @@ class App extends Component {
         let count = 0
         //row===7 && column===0 ? console.log(neighbors) : null
         neighbors.map(function (thisNeighbor) {
-          if (thisNeighbor === aliveCell) {count++}
+          if (thisNeighbor === aliveCell) { count++ }
         })
         if (square === aliveCell) {
           //Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
-          if (count < 2) {square = deadCell}
+          if (count < 2) { square = deadCell }
           //Any live cell with two or three live neighbours lives on to the next generation.
-          if (count !== 2 && count !== 3) {square = deadCell}
+          if (count !== 2 && count !== 3) { square = deadCell }
           //Any live cell with more than three live neighbours dies, as if by overpopulation.
-          if (count > 3) {square = deadCell}
+          if (count > 3) { square = deadCell }
         } else {
           //Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-          if (count === 3) {square = aliveCell}
+          if (count === 3) { square = aliveCell }
         }
         newRow.push(square)
         column++
@@ -201,7 +201,7 @@ class App extends Component {
 
   render() {
 
-    console.log("rendering")
+    //console.log("rendering")
     const self = this // cannot simply access this.state.whatevervarsneeded
     var row = -1
 
@@ -216,6 +216,22 @@ class App extends Component {
           <button onClick={() => { self.clearBoard() }} className="btn col">Clear</button>
         </div>
 
+        <div className="text-center row generation-info">
+
+          <div className="text-center col-6">
+            <div className="row">
+              <i className="col-6 fas fa-code-branch" aria-hidden="true"></i>
+              <p className="col-6" id="">{this.state.generation}</p>
+            </div>
+          </div>
+          <div className="text-center col-6">
+            <div className="row">
+              <i className="col-6 fa fa-clock"></i>
+              <p className="col-6" id="">{this.state.speed} ms</p>
+            </div>
+          </div>
+
+        </div>
 
         <div className="text-center grid-holder">
           {this.state.boardMatrix.map(function (thisRow) {
@@ -243,24 +259,12 @@ class App extends Component {
           })}
         </div>
 
-        <div className="generation-info text-center row">
-
-          <div className="col-4 board-info">
-            <i className="fa fa-code-fork"></i>
-            <p className="" id="">{this.state.generation}</p>
-          </div>
-          <div className="col-4 board-info">
-            <i className="fa fa-clock-o"></i>
-            <p className="" id="">{this.state.speed} ms</p>
-          </div>
-        </div>
-
         <div className="row modifier-buttons" id="">
 
-          <button onClick={() => { self.changeSize(0) }} className="col">
+          <button onClick={() => { self.changeSize(0) }} className="btn col">
             <i className="fa fa-compress"></i>
           </button>
-          <button onClick={() => { self.changeSize(1) }} className="col">
+          <button onClick={() => { self.changeSize(1) }} className="btn col">
             <i className="fa fa-expand"></i>
           </button>
         </div>
@@ -268,10 +272,10 @@ class App extends Component {
 
         <div className="row modifier-buttons">
 
-          <button onClick={() => { self.changeSpeed(0) }} className="col">
+          <button onClick={() => { self.changeSpeed(0) }} className="btn col">
             <i className="fa fa-walking"></i>
           </button>
-          <button onClick={() => { self.changeSpeed(1) }} className="col">
+          <button onClick={() => { self.changeSpeed(1) }} className="btn col">
             <i className="fa fa-running"></i>
           </button>
         </div>
