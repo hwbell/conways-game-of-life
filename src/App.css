@@ -42,7 +42,7 @@ h2 {
   border: 1px solid #00BCD4 ! important;
   width: 20px; 
   height: 20px;
-  margin: 1px 1px;
+  margin: -1px 1px;
   border-radius: 8px;
 }
 
@@ -53,7 +53,7 @@ h2 {
   margin-bottom: -10px;
 }
 
-.control-buttons button, .modifier-buttons button {
+.btn {
   background-color:#00838F;
   color: white;
   font-family: Quicksand ;
@@ -62,7 +62,7 @@ h2 {
   border-radius: 15px;
 }
 
-.control-buttons button:hover, .modifier-buttons button:hover {
+.btn:hover {
   background-color: #48C9B0;
   cursor: pointer;
   color: white;

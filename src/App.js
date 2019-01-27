@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+// components
+import ControlButtons from './components/ControlButtons';
+import GameInfo from './components/GameInfo';
+import Game from './components/Game';
+import ModifierButtons from './components/ModifierButtons';
+import Introduction from './components/Introduction';
+import ReactCardFlip from 'react-card-flip';
+
 const mainColor = '#48C9B0'
 
 class App extends Component {
@@ -10,7 +18,10 @@ class App extends Component {
     this.clearBoard = this.clearBoard.bind(this)
     this.pauseBoard = this.pauseBoard.bind(this)
     this.runGame = this.runGame.bind(this)
+    this.handleButtonClick = this.handleButtonClick.bind(this)
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
+      isFlipped: false,
       intervalId: null,
       deadCell: "white",
       aliveCell: mainColor,
@@ -26,6 +37,13 @@ class App extends Component {
   componentDidMount() {
     console.log("mounted")
     this.runGame()
+  }
+
+  // this function is for the flipping of the main container
+  // to the game itself - courtesy of react-card-flip
+  handleClick() {
+    //e.preventDefault();
+    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
   }
 
   makeBoard(length, width) {
@@ -201,87 +219,56 @@ class App extends Component {
 
   render() {
 
-    //console.log("rendering")
-    const self = this // cannot simply access this.state.whatevervarsneeded
-    var row = -1
-
     return (
-
-
-      <div className="container">
-        <h2 className="text-center">Conway's Game of Life</h2>
-        <div className="row control-buttons" id="">
-          <button onClick={() => { self.runGame() }} className="btn col">Start</button>
-          <button onClick={() => { self.pauseBoard() }} className="btn col">Pause</button>
-          <button onClick={() => { self.clearBoard() }} className="btn col">Clear</button>
+      <ReactCardFlip isFlipped={this.state.isFlipped}>
+        <div className="" key="front" >
+          <Introduction handleClick={this.handleClick}/>
         </div>
 
-        <div className="text-center row generation-info">
+        <div className="container" key="back">
+          <h2 className="text-center">Conway's Game of Life</h2>
 
-          <div className="text-center col-6">
-            <div className="row">
-              <i className="col-6 fas fa-code-branch" aria-hidden="true"></i>
-              <p className="col-6" id="">{this.state.generation}</p>
-            </div>
+          <ControlButtons
+            runGame={this.runGame}
+            pauseBoard={this.pauseBoard}
+            clearBoard={this.clearBoard}
+            handleClick={this.handleClick}
+          />
+
+          <GameInfo
+            generation={this.state.generation}
+            speed={this.state.speed}
+          />
+
+          <Game
+            boardMatrix={this.state.boardMatrix}
+            handleButtonClick={this.handleButtonClick}
+          />
+
+          <div className="row modifier-buttons" id="">
+
+            <button onClick={() => { this.changeSize(0) }} className="btn col">
+              <i className="fa fa-compress"></i>
+            </button>
+            <button onClick={() => { this.changeSize(1) }} className="btn col">
+              <i className="fa fa-expand"></i>
+            </button>
           </div>
-          <div className="text-center col-6">
-            <div className="row">
-              <i className="col-6 fa fa-clock"></i>
-              <p className="col-6" id="">{this.state.speed} ms</p>
-            </div>
+
+
+          <div className="row modifier-buttons">
+
+            <button onClick={() => { this.changeSpeed(0) }} className="btn col">
+              <i className="fa fa-walking"></i>
+            </button>
+            <button onClick={() => { this.changeSpeed(1) }} className="btn col">
+              <i className="fa fa-running"></i>
+            </button>
           </div>
 
+
         </div>
-
-        <div className="text-center grid-holder">
-          {this.state.boardMatrix.map(function (thisRow) {
-            row++
-            var column = 0
-            //console.log(row, column)
-            return (
-
-              <div className="" key={row}>
-                {thisRow.map(function () {
-                  //console.log(thisRow[column])
-                  let color = thisRow[column]
-                  //let buttonId = "#row" + row + "col" + column
-                  let currentRow = row
-                  let currentColumn = column
-                  //console.log(buttonId)
-                  column++
-                  return (
-                    <button key={column} onClick={() => { self.handleButtonClick(currentRow, currentColumn) }} className="btn btn-sm gamebutton" /*id={buttonId}*/ style={{ "backgroundColor": color }} ></button>
-                  )
-                })}
-              </div>
-            )
-
-          })}
-        </div>
-
-        <div className="row modifier-buttons" id="">
-
-          <button onClick={() => { self.changeSize(0) }} className="btn col">
-            <i className="fa fa-compress"></i>
-          </button>
-          <button onClick={() => { self.changeSize(1) }} className="btn col">
-            <i className="fa fa-expand"></i>
-          </button>
-        </div>
-
-
-        <div className="row modifier-buttons">
-
-          <button onClick={() => { self.changeSpeed(0) }} className="btn col">
-            <i className="fa fa-walking"></i>
-          </button>
-          <button onClick={() => { self.changeSpeed(1) }} className="btn col">
-            <i className="fa fa-running"></i>
-          </button>
-        </div>
-
-
-      </div>
+      </ReactCardFlip>
     )
   }
 }
