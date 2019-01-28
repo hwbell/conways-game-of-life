@@ -20,7 +20,11 @@ class Game extends Component {
 
     var row = -1;
     const self = this; // this is necessary for access inside of the map function below.
-    
+    const styles = {
+      row: {
+        marginBottom: -8
+      }
+    }
     return (
       
       <div className="text-center grid-holder">
@@ -30,7 +34,7 @@ class Game extends Component {
             //console.log(row, column)
             return (
 
-              <div className="" key={row}>
+              <div className="" style={styles.row} key={row}>
                 {thisRow.map(function () {
                   //console.log(thisRow[column])
                   let color = thisRow[column]

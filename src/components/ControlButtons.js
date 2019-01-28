@@ -22,10 +22,18 @@ class ControlButtons extends Component {
 
 
       <div className="row control-buttons" id="">
-        <button onClick={() => { this.props.runGame() }} className="btn col">Start</button>
-        <button onClick={() => { this.props.pauseBoard() }} className="btn col">Pause</button>
-        <button onClick={() => { this.props.clearBoard() }} className="btn col">Clear</button>
-        <button onClick={() => { this.props.handleClick() }} className="btn col">Info</button>
+        <button onClick={() => { this.props.runGame() }} className="btn col-3">
+          <i className="fa fa-play"></i>
+        </button>
+        <button onClick={() => { this.props.pauseBoard() }} className="btn col-3">
+          <i className="fa fa-pause"></i>
+        </button>
+        <button onClick={() => { this.props.clearBoard() }} className="btn col-3">
+          <i class="fas fa-redo-alt"></i>
+        </button>
+        <button onClick={() => { this.props.handleClick() }} className="btn col-3">
+          <i class="fa fa-question"></i>
+        </button>
       </div>
     )
   }

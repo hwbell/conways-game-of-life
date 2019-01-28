@@ -22,13 +22,13 @@ class GameInfo extends Component {
         <div className="text-center row generation-info">
 
           <div className="text-center col-6">
-            <div className="row">
+            <div className="row" >
               <i className="col-6 fas fa-code-branch" aria-hidden="true"></i>
               <p className="col-6" id="">{this.props.generation}</p>
             </div>
           </div>
           <div className="text-center col-6">
-            <div className="row">
+            <div className="row" >
               <i className="col-6 fa fa-clock"></i>
               <p className="col-6" id="">{this.props.speed} ms</p>
             </div>
@@ -38,5 +38,11 @@ class GameInfo extends Component {
     )
   }
 }
+
+// const styles = {
+//   row: {
+//     width: 100
+//   }
+// }
 
 export default GameInfo;

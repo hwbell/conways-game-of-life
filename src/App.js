@@ -15,11 +15,14 @@ const mainColor = '#48C9B0'
 class App extends Component {
   constructor(props) {
     super(props)
-    this.clearBoard = this.clearBoard.bind(this)
-    this.pauseBoard = this.pauseBoard.bind(this)
-    this.runGame = this.runGame.bind(this)
-    this.handleButtonClick = this.handleButtonClick.bind(this)
-    this.handleClick = this.handleClick.bind(this);
+    this.clearBoard = this.clearBoard.bind(this);
+    this.pauseBoard = this.pauseBoard.bind(this);
+    this.runGame = this.runGame.bind(this);
+    this.changeSize = this.changeSize.bind(this);
+    this.changeSpeed = this.changeSpeed.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleClickToFront = this.handleClickToFront.bind(this);
+    this.handleClickToBack = this.handleClickToBack.bind(this);
     this.state = {
       isFlipped: false,
       intervalId: null,
@@ -35,14 +38,21 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("mounted")
-    this.runGame()
+    // console.log("mounted")
+    // this.runGame()
   }
 
   // this function is for the flipping of the main container
   // to the game itself - courtesy of react-card-flip
-  handleClick() {
+  handleClickToFront() {
     //e.preventDefault();
+    this.runGame();
+    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+  }
+
+  handleClickToBack() {
+    //e.preventDefault();
+    this.clearBoard();
     this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
   }
 
@@ -221,8 +231,8 @@ class App extends Component {
 
     return (
       <ReactCardFlip isFlipped={this.state.isFlipped}>
-        <div className="" key="front" >
-          <Introduction handleClick={this.handleClick}/>
+        <div className="" key="front" style={{transformStyle: 'initial'}}>
+          <Introduction handleClick={this.handleClickToFront}/>
         </div>
 
         <div className="container" key="back">
@@ -232,7 +242,7 @@ class App extends Component {
             runGame={this.runGame}
             pauseBoard={this.pauseBoard}
             clearBoard={this.clearBoard}
-            handleClick={this.handleClick}
+            handleClick={this.handleClickToBack}
           />
 
           <GameInfo
@@ -245,26 +255,10 @@ class App extends Component {
             handleButtonClick={this.handleButtonClick}
           />
 
-          <div className="row modifier-buttons" id="">
-
-            <button onClick={() => { this.changeSize(0) }} className="btn col">
-              <i className="fa fa-compress"></i>
-            </button>
-            <button onClick={() => { this.changeSize(1) }} className="btn col">
-              <i className="fa fa-expand"></i>
-            </button>
-          </div>
-
-
-          <div className="row modifier-buttons">
-
-            <button onClick={() => { this.changeSpeed(0) }} className="btn col">
-              <i className="fa fa-walking"></i>
-            </button>
-            <button onClick={() => { this.changeSpeed(1) }} className="btn col">
-              <i className="fa fa-running"></i>
-            </button>
-          </div>
+          <ModifierButtons 
+            changeSize={this.changeSize}
+            changeSpeed={this.changeSpeed}
+          />
 
 
         </div>
