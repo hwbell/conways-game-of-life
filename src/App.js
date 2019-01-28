@@ -10,31 +10,70 @@ import ModifierButtons from './components/ModifierButtons';
 import Introduction from './components/Introduction';
 import ReactCardFlip from 'react-card-flip';
 
+const makeRandomBoard = (length, width) => {
+  var cells = ["white", mainColor]
+  let grid = []
+  for (let i = 0; i < length; i++) {
+    let row = []
+    var squareColor
+    for (let i = 0; i < width; i++) {
+
+      var randomColor = Math.random()
+      if (randomColor < 0.75) {
+        // option 1: chance 0.0–0.499...
+        squareColor = cells[0]
+      } else if (randomColor < 1) {
+        // option 2: chance 0.50—0.7499...
+        squareColor = cells[1]
+      }
+      row.push(squareColor)
+    }
+    grid.push(row)
+  }
+  return grid
+}
+
 const mainColor = '#48C9B0'
+
+const initialStateFront = {
+  isFlipped: false,
+  intervalId: null,
+  deadCell: "white",
+  aliveCell: mainColor,
+  size: 15,
+  totalRows: 15,
+  totalColumns: 15,
+  boardMatrix: makeRandomBoard(15, 15),
+  speed: 500,
+  generation: 0
+}
+
+const initialStateBack = {
+  isFlipped: true,
+  intervalId: null,
+  deadCell: "white",
+  aliveCell: mainColor,
+  size: 15,
+  totalRows: 15,
+  totalColumns: 15,
+  boardMatrix: makeRandomBoard(15, 15),
+  speed: 500,
+  generation: 0
+}
 
 class App extends Component {
   constructor(props) {
     super(props)
-    this.clearBoard = this.clearBoard.bind(this);
+    // this.clearBoard = this.clearBoard.bind(this);
     this.pauseBoard = this.pauseBoard.bind(this);
     this.runGame = this.runGame.bind(this);
+    this.restartGame = this.restartGame.bind(this);
     this.changeSize = this.changeSize.bind(this);
     this.changeSpeed = this.changeSpeed.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleClickToFront = this.handleClickToFront.bind(this);
     this.handleClickToBack = this.handleClickToBack.bind(this);
-    this.state = {
-      isFlipped: false,
-      intervalId: null,
-      deadCell: "white",
-      aliveCell: mainColor,
-      size: 15,
-      totalRows: 15,
-      totalColumns: 15,
-      boardMatrix: this.makeRandomBoard(15, 15),
-      speed: 500,
-      generation: 0
-    }
+    this.state = initialStateFront;
   }
 
   componentDidMount() {
@@ -46,13 +85,13 @@ class App extends Component {
   // to the game itself - courtesy of react-card-flip
   handleClickToFront() {
     //e.preventDefault();
-    this.runGame();
+    this.restartGame();
     this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
   }
 
   handleClickToBack() {
     //e.preventDefault();
-    this.clearBoard();
+    // this.clearBoard();
     this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
   }
 
@@ -61,29 +100,6 @@ class App extends Component {
     let grid = []
     for (let i = 0; i < length; i++) {
       grid.push(Array(width).fill(deadCell))
-    }
-    return grid
-  }
-
-  makeRandomBoard(length, width) {
-    var cells = ["white", mainColor]
-    let grid = []
-    for (let i = 0; i < length; i++) {
-      let row = []
-      var squareColor
-      for (let i = 0; i < width; i++) {
-
-        var randomColor = Math.random()
-        if (randomColor < 0.75) {
-          // option 1: chance 0.0–0.499...
-          squareColor = cells[0]
-        } else if (randomColor < 1) {
-          // option 2: chance 0.50—0.7499...
-          squareColor = cells[1]
-        }
-        row.push(squareColor)
-      }
-      grid.push(row)
     }
     return grid
   }
@@ -98,12 +114,13 @@ class App extends Component {
       if (length < 40) { length = length + 5 }
       if (width < 40) { width = width + 5 }
     }
-    this.clearBoard()
+    
     this.setState({
-      boardMatrix: this.makeBoard(length, width),
+      boardMatrix: makeRandomBoard(length, width),
       totalRows: length,
       totalColumns: width
-    })
+    });
+    this.restartGame();
   }
 
   changeSpeed(int) {
@@ -208,17 +225,18 @@ class App extends Component {
     this.setState({ intervalId: game })
   }
 
-  clearBoard(event) {
+  restartGame () {
     console.log("clearing board")
     let length = this.state.totalRows
     let width = this.state.totalColumns
     console.log(length, width)
     this.setState({
-      boardMatrix: this.makeBoard(length, width),
+      boardMatrix: makeRandomBoard(length, width),
       generation: 0
     })
     console.log(length, width)
     window.clearInterval(this.state.intervalId)
+    this.runGame();
   }
 
   pauseBoard(event) {
@@ -227,12 +245,16 @@ class App extends Component {
     window.clearInterval(this.state.intervalId)
   }
 
+
+
   render() {
 
     return (
       <ReactCardFlip isFlipped={this.state.isFlipped}>
-        <div className="" key="front" style={{transformStyle: 'initial'}}>
-          <Introduction handleClick={this.handleClickToFront}/>
+        <div className="" key="front" style={{ transformStyle: 'initial' }}>
+          <Introduction
+            handleClick={this.handleClickToFront}
+          />
         </div>
 
         <div className="container" key="back">
@@ -241,7 +263,7 @@ class App extends Component {
           <ControlButtons
             runGame={this.runGame}
             pauseBoard={this.pauseBoard}
-            clearBoard={this.clearBoard}
+            restartGame={this.restartGame}
             handleClick={this.handleClickToBack}
           />
 
@@ -255,7 +277,7 @@ class App extends Component {
             handleButtonClick={this.handleButtonClick}
           />
 
-          <ModifierButtons 
+          <ModifierButtons
             changeSize={this.changeSize}
             changeSpeed={this.changeSpeed}
           />

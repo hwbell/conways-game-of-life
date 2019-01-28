@@ -16,11 +16,6 @@ class ControlButtons extends Component {
     // console.log("mounted")
   }
 
-  restart () {
-    this.props.clearBoard();
-    this.props.runGame();
-  }
-
   render() {
 
     return (
@@ -33,7 +28,7 @@ class ControlButtons extends Component {
         <button onClick={() => { this.props.pauseBoard() }} className="btn col-3">
           <i className="fa fa-pause"></i>
         </button>
-        <button onClick={() => { this.props.clearBoard() }} className="btn col-3">
+        <button onClick={() => { this.props.restartGame() }} className="btn col-3">
           <i class="fas fa-redo-alt"></i>
         </button>
         <button onClick={() => { this.props.handleClick() }} className="btn col-3">
