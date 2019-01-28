@@ -37,7 +37,7 @@ class App extends Component {
           <button onClick={() => { this.props.changeSpeed(1) }} className="btn col-3">
             <i className="fa fa-running"></i>
           </button>
-          
+
         </div>
       </div>
     )

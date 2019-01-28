@@ -40,10 +40,10 @@ const initialStateFront = {
   intervalId: null,
   deadCell: "white",
   aliveCell: mainColor,
-  size: 15,
-  totalRows: 15,
-  totalColumns: 15,
-  boardMatrix: makeRandomBoard(15, 15),
+  size: 25,
+  totalRows: 25,
+  totalColumns: 25,
+  boardMatrix: makeRandomBoard(25, 25),
   speed: 500,
   generation: 0
 }
@@ -105,22 +105,23 @@ class App extends Component {
   }
 
   changeSize(int) {
-    let length = this.state.totalRows
-    let width = this.state.totalColumns
+    let length = this.state.totalRows;
+    let width = this.state.totalColumns;
     if (int === 0) {
-      if (length > 15) { length = length - 5 }
-      if (width > 15) { width = width - 5 }
+      length = length > 15 ? length-5 : 15;
+      width = width > 15 ? width-5 : 15;
     } else {
-      if (length < 40) { length = length + 5 }
-      if (width < 40) { width = width + 5 }
+      length = length < 40 ? length+5 : 40;
+      width = width < 40 ? width+5 : 40;
     }
-    
     this.setState({
       boardMatrix: makeRandomBoard(length, width),
       totalRows: length,
       totalColumns: width
+    }, () => {
+      this.restartGame();
     });
-    this.restartGame();
+    
   }
 
   changeSpeed(int) {
@@ -130,14 +131,14 @@ class App extends Component {
     } else {
       if (speed > 250) { speed = speed - 250 };
     }
-    this.setState({ speed: speed })
+    this.setState({ speed: speed });
   }
 
   handleButtonClick(row, column) {
-    console.log(row, column)
+    //console.log(row, column)
     let newBoard = this.state.boardMatrix.slice()
     let newRow = newBoard[row].slice()
-    console.log(newBoard[row][column])
+    //console.log(newBoard[row][column])
     newRow[column] = newRow[column] !== this.state.aliveCell ? this.state.aliveCell : this.state.deadCell
     newBoard.splice(row, 1, newRow)
     //grid = newBoard
@@ -218,7 +219,7 @@ class App extends Component {
   runGame(event) {
     let self = this
     let generation = this.state.generation
-    console.log("running game!")
+    //console.log("running game!")
     var game = window.setInterval(function () {
       self.generateNextGeneration()
     }, this.state.speed)
@@ -226,21 +227,21 @@ class App extends Component {
   }
 
   restartGame () {
-    console.log("clearing board")
+    //console.log("clearing board")
     let length = this.state.totalRows
     let width = this.state.totalColumns
-    console.log(length, width)
+    //console.log(length, width)
     this.setState({
       boardMatrix: makeRandomBoard(length, width),
       generation: 0
     })
-    console.log(length, width)
+    //console.log(length, width)
     window.clearInterval(this.state.intervalId)
     this.runGame();
   }
 
   pauseBoard(event) {
-    console.log("paused board")
+    //console.log("paused board")
     //this.setState({boardMatrix: grid})
     window.clearInterval(this.state.intervalId)
   }

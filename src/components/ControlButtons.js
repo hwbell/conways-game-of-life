@@ -29,10 +29,10 @@ class ControlButtons extends Component {
           <i className="fa fa-pause"></i>
         </button>
         <button onClick={() => { this.props.restartGame() }} className="btn col-3">
-          <i class="fas fa-redo-alt"></i>
+          <i className="fas fa-redo-alt"></i>
         </button>
         <button onClick={() => { this.props.handleClick() }} className="btn col-3">
-          <i class="fa fa-question"></i>
+          <i className="fa fa-question"></i>
         </button>
       </div>
     )
