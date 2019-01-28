@@ -41,12 +41,13 @@ h2 {
 .gamebutton {
   display: inline-block;
   border: 1px solid #00BCD4 ! important;
-  min-width: 10px;
   width: 10px; 
-  height: 15px;
+  height: 10px;
+  max-width: 10px;
   margin: 1px;
   border-radius: 8px;
 }
+
 
 .btn {
   background-color:#00838F;
@@ -58,7 +59,7 @@ h2 {
   border-radius: 15px;
 }
 
-.btn:hover {
+.btn:hover, .gamebutton:hover {
   background-color: #48C9B0;
   cursor: pointer;
   color: white;
@@ -82,11 +83,13 @@ h2 {
 
 .generation-info {
   width: 50%;
+  max-width: 350px;
+  min-width: 230px;
   margin: 20px auto -10px auto;
 }
 
 .generation-info .row i {
-  margin-right: -25px;
+  margin-right: -10px;
   font-size: 25px;
 }
 

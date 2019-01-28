@@ -16,6 +16,11 @@ class ControlButtons extends Component {
     // console.log("mounted")
   }
 
+  restart () {
+    this.props.clearBoard();
+    this.props.runGame();
+  }
+
   render() {
 
     return (
