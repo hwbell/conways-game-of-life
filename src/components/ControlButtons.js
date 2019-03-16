@@ -20,20 +20,28 @@ class ControlButtons extends Component {
 
     return (
 
+      <div className="container">
+        <hr />
+        <div className="row control-buttons" id="">
+          <button onClick={() => { this.props.runGame() }} className="btn col">
+            <i className="fa fa-play"></i>
+          </button>
+          <button onClick={() => { this.props.pauseBoard() }} className="btn col">
+            <i className="fa fa-pause"></i>
+          </button>
+          <button onClick={() => { this.props.clearBoard() }} className="btn col">
+            <i className="fas fa-redo-alt"></i>
+          </button>
 
-      <div className="row control-buttons" id="">
-        <button onClick={() => { this.props.runGame() }} className="btn col-3">
-          <i className="fa fa-play"></i>
-        </button>
-        <button onClick={() => { this.props.pauseBoard() }} className="btn col-3">
-          <i className="fa fa-pause"></i>
-        </button>
-        <button onClick={() => { this.props.restartGame() }} className="btn col-3">
-          <i className="fas fa-redo-alt"></i>
-        </button>
-        <button onClick={() => { this.props.handleClick() }} className="btn col-3">
-          <i className="fa fa-question"></i>
-        </button>
+          <button onClick={() => { this.props.restartGame() }} className="btn col">
+            <i className="fas fa-dice"></i>
+          </button>
+          <button onClick={() => { this.props.handleClick() }} className="btn col">
+            <i className="fa fa-question"></i>
+          </button>
+
+        </div>
+        <hr />
       </div>
     )
   }

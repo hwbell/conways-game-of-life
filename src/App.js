@@ -33,7 +33,21 @@ const makeRandomBoard = (length, width) => {
   return grid
 }
 
-const mainColor = '#48C9B0'
+const makeEmptyBoard = (length, width) => {
+  // var cells = ["white", mainColor]
+  let grid = []
+  for (let i = 0; i < length; i++) {
+    let row = []
+    // var squareColor = 'white';
+    for (let i = 0; i < width; i++) {
+      row.push('white')
+    }
+    grid.push(row)
+  }
+  return grid
+}
+
+const mainColor = 'black'
 
 const initialStateFront = {
   isFlipped: false,
@@ -41,30 +55,18 @@ const initialStateFront = {
   deadCell: "white",
   aliveCell: mainColor,
   size: 25,
-  totalRows: 25,
-  totalColumns: 25,
-  boardMatrix: makeRandomBoard(25, 25),
+  totalRows: 40,
+  totalColumns: 40,
+  boardMatrix: makeRandomBoard(40, 40),
   speed: 500,
   generation: 0
 }
 
-const initialStateBack = {
-  isFlipped: true,
-  intervalId: null,
-  deadCell: "white",
-  aliveCell: mainColor,
-  size: 15,
-  totalRows: 15,
-  totalColumns: 15,
-  boardMatrix: makeRandomBoard(15, 15),
-  speed: 500,
-  generation: 0
-}
 
 class App extends Component {
   constructor(props) {
     super(props)
-    // this.clearBoard = this.clearBoard.bind(this);
+    this.clearBoard = this.clearBoard.bind(this);
     this.pauseBoard = this.pauseBoard.bind(this);
     this.runGame = this.runGame.bind(this);
     this.restartGame = this.restartGame.bind(this);
@@ -95,24 +97,15 @@ class App extends Component {
     this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
   }
 
-  makeBoard(length, width) {
-    var deadCell = "white"
-    let grid = []
-    for (let i = 0; i < length; i++) {
-      grid.push(Array(width).fill(deadCell))
-    }
-    return grid
-  }
-
   changeSize(int) {
     let length = this.state.totalRows;
     let width = this.state.totalColumns;
     if (int === 0) {
-      length = length > 15 ? length-5 : 15;
-      width = width > 15 ? width-5 : 15;
+      length = length > 20 ? length-5 : 20;
+      width = width > 20 ? width-5 : 20;
     } else {
-      length = length < 40 ? length+5 : 40;
-      width = width < 40 ? width+5 : 40;
+      length = length < 50 ? length+5 : 50;
+      width = width < 50 ? width+5 : 50;
     }
     this.setState({
       boardMatrix: makeRandomBoard(length, width),
@@ -246,7 +239,16 @@ class App extends Component {
     window.clearInterval(this.state.intervalId)
   }
 
+  clearBoard () {
+    window.clearInterval(this.state.intervalId)
+    let length = this.state.totalRows;
+    let width = this.state.totalColumns
+    let emptyBoard = makeEmptyBoard(length, width);
 
+    this.setState({
+      boardMatrix: emptyBoard,
+    })
+  }
 
   render() {
 
@@ -260,14 +262,14 @@ class App extends Component {
 
         <div className="container" key="back">
           <h2 className="text-center">Conway's Game of Life</h2>
-
           <ControlButtons
             runGame={this.runGame}
             pauseBoard={this.pauseBoard}
+            clearBoard={this.clearBoard}
             restartGame={this.restartGame}
             handleClick={this.handleClickToBack}
-          />
 
+          />
           <GameInfo
             generation={this.state.generation}
             speed={this.state.speed}

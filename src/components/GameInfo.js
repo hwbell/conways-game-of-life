@@ -40,8 +40,8 @@ class GameInfo extends Component {
 }
 
 // const styles = {
-//   row: {
-//     width: 100
+//   text: {
+//     fontWeight: 'bolder !important'
 //   }
 // }
 
